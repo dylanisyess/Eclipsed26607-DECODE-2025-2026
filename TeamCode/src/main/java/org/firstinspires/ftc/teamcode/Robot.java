@@ -42,7 +42,6 @@ public class Robot {
     double W = 200;
     double R = sqrt((L*L) + (W*W));
     double FWD, STR, RCW, A, B, C, D, FRA, FLA, BLA, BRA, FRS, FLS, BLS, BRS, max;
-    double prev_X, prev_Y;
 
 
     IMU imu;
@@ -86,7 +85,7 @@ public class Robot {
 
     }
 
-    public void swerve_drive(double LY, double LX, double RY, double RX) {
+    public void swerve_drive(double LY, double LX, double RX) {
         FWD = LY;
         STR = LX;
         RCW = RX;
@@ -115,6 +114,40 @@ public class Robot {
         FLS /= max;
         BLS /= max;
         BRS /= max;
+
+        if (FRA < 0) {
+            FRA =- 180;
+            FRS =  FRS * -1;
+        }
+        if (FLA < 0) {
+            FLA =- 180;
+            FLS =  FLS * -1;
+        }
+        if (BLA < 0) {
+            BLA =- 180;
+            BLS =  BLS * -1;
+        }
+        if (BRA < 0) {
+            BRA =- 180;
+            BRS =  BRS * -1;
+        }
+
+        if (FRA > 63.5) {
+            FRA =- 180;
+            FRS =  FRS * -1;
+        }
+        if (FLA < 0) {
+            FLA =- 180;
+            FLS =  FLS * -1;
+        }
+        if (BLA < 0) {
+            BLA =- 180;
+            BLS =  BLS * -1;
+        }
+        if (BRA < 0) {
+            BRA =- 180;
+            BRS =  BRS * -1;
+        }
 
         frontRightServo.setPosition(FRA);
         frontLeftServo.setPosition(FLA);
