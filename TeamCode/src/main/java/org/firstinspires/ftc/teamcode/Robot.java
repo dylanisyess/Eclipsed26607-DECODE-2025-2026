@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;;
 
+import static com.sun.tools.doclint.Entity.pi;
+
 import android.content.Context;
 
 import com.qualcomm.ftccommon.SoundPlayer;
@@ -17,6 +19,12 @@ import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import static java.lang.Math.atan2;
+import static java.lang.Math.sqrt;
+import static java.lang.Math.atan2;
+import static java.lang.Math.toDegrees;
+import static java.lang.Math.PI;
+
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 
@@ -30,16 +38,12 @@ public class Robot {
     private List<DcMotorEx> motors;
     private Context _appContext;
     public ElapsedTime runtime = new ElapsedTime();
-    public double rightpodposition;
-    public double leftpodposition;
-    public boolean leftpoddirection;
-    public boolean rightpoddirection;
-    public double left_theta, right_theta, prev_left_theta, prev_right_theta;
-    public double left_magnitude, right_magnitude;
-    public double left_forward, right_forward;
-    public boolean moving;
-    public double magnitude_gain = 0.5;
-    public float rightwheelposition;
+    double L = 200;
+    double W = 200;
+    double R = sqrt((L*L) + (W*W));
+    double FWD, STR, RCW, A, B, C, D, FRA, FLA, BLA, BRA, FRS, FLS, BLS, BRS, max;
+    double prev_X, prev_Y;
+
 
     IMU imu;
     private static final double MAX_VELOCITY = 2800d;
@@ -82,9 +86,45 @@ public class Robot {
 
     }
 
-    public void swerve_drive(double LY, double LX) {
-        left_theta = -Math.atan2(LY, LX);
-        left_magnitude = Math.sqrt(Math.pow(LY, 2.0) + Math.pow(LX, 2.0));
+    public void swerve_drive(double LY, double LX, double RY, double RX) {
+        FWD = LY;
+        STR = LX;
+        RCW = RX;
+
+        A = STR - RCW*(L/R);
+        B = STR + RCW*(L/R);
+        C = FWD - RCW*(W/R);
+        D = FWD + RCW*(W/R);
+
+        FRS = sqrt((B*B)+(C*C));
+        FLS = sqrt((B*B)+(D*D));
+        BLS = sqrt((A*A)+(D*D));
+        BRS = sqrt((A*A)+(C*C));
+
+        FRA = atan2(B,C)*180/Math.PI;
+        FLA = atan2(B,D)*180/Math.PI;
+        BLA = atan2(A,D)*180/Math.PI;
+        BRA = atan2(A,C)*180/Math.PI;
+
+        max = FRS;
+        if (FLS > max) {max = FLS;}
+        if (BLS > max) {max = BLS;}
+        if (BRS > max) {max = BRS;}
+
+        FRS /= max;
+        FLS /= max;
+        BLS /= max;
+        BRS /= max;
+
+        frontRightServo.setPosition(FRA);
+        frontLeftServo.setPosition(FLA);
+        backLeftServo.setPosition(BLA);
+        backRightServo.setPosition(BRA);
+
+        frontRight.setPower(FRA);
+        frontLeft.setPower(FLA);
+        backLeft.setPower(BLA);
+        backRight.setPower(BRA);
     }
 
     double getHeading() {
