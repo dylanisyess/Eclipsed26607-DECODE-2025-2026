@@ -35,7 +35,7 @@ public class run extends LinearOpMode {
 
             LX = gamepad1.left_stick_x;
             LY = gamepad1.left_stick_y;
-            RX = gamepad2.right_stick_x;
+            RX = gamepad1.right_stick_x;
 
             if (LX != 0 && LY != 0 && RX != 0 || LX > prev_X + 0.1 || LX < prev_X - 0.1 || LY > prev_Y + 0.1 || LY < prev_Y - 0.1 || RX > prev_X2 + 0.1 || RX < prev_X2 - 0.1 ) {
                 Robot.swerve_drive(LY, LX, RX);
