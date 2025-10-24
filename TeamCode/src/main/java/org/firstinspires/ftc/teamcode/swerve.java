@@ -64,15 +64,15 @@ public class swerve {
     private double curFRA = 0, curFLA = 0, curBRA = 0, curBLA = 0;
 
     public void init(HardwareMap hw) {
-        frontRight = hw.get(DcMotorEx.class, "frDrive");
-        frontLeft = hw.get(DcMotorEx.class, "flDrive");
-        backRight = hw.get(DcMotorEx.class, "brDrive");
-        backLeft = hw.get(DcMotorEx.class, "blDrive");
+        frontRight = hw.get(DcMotorEx.class, "frontRight");
+        frontLeft = hw.get(DcMotorEx.class, "frontLeft");
+        backRight = hw.get(DcMotorEx.class, "backRight");
+        backLeft = hw.get(DcMotorEx.class, "backLeft");
 
-        frontRightServo = hw.get(Servo.class, "frSteer");
-        frontLeftServo = hw.get(Servo.class, "flSteer");
-        backRightServo = hw.get(Servo.class, "brSteer");
-        backLeftServo = hw.get(Servo.class, "blSteer");
+        frontRightServo = hw.get(Servo.class, "frontRightServo");
+        frontLeftServo = hw.get(Servo.class, "frontLeftServo");
+        backRightServo = hw.get(Servo.class, "backRightServo");
+        backLeftServo = hw.get(Servo.class, "backLeftServo");
 
         imu = hw.get(IMU.class, "imu");
         imu.initialize(new IMU.Parameters(new RevHubOrientationOnRobot(

@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 
-@TeleOp(name="Teleop_final", group="Linear OpMode")
+@TeleOp(name="run", group="Linear OpMode")
 // @Disabled
 public class run extends LinearOpMode {
     private final Robot Robot = new Robot();
@@ -34,12 +34,13 @@ public class run extends LinearOpMode {
 
 
             LX = gamepad1.left_stick_x;
-            LY = gamepad1.left_stick_y;
+            LY = -gamepad1.left_stick_y;
             RX = gamepad1.right_stick_x;
 
             if (LX != 0 && LY != 0 && RX != 0 || LX > prev_X + 0.1 || LX < prev_X - 0.1 || LY > prev_Y + 0.1 || LY < prev_Y - 0.1 || RX > prev_X2 + 0.1 || RX < prev_X2 - 0.1 ) {
                 Robot.swerve_drive(LY, LX, RX);
-            } else if (LX == 0 && LY == 0 && RX == 0) {
+            } else if ((LX < 0.1 && LX > -0.1) && (LY < 0.1 && LY > -0.1) && (RX < 0.1 && RX > -0.1))
+            {
                 Robot.frontLeftServo.setPosition(0.5);
                 Robot.frontRightServo.setPosition(0.5);
                 Robot.backLeftServo.setPosition(0.5);
@@ -50,10 +51,19 @@ public class run extends LinearOpMode {
                 Robot.backRight.setPower(0);
             }
 
-//            telemetry.addData("Front left Position", frontLeft.getPosition());
-//            telemetry.addData("Right Servo Position", rightservo.getPosition());
-//            telemetry.addData("moving?", moving );
-//            telemetry.update();
+            telemetry.addData("neg", Robot.neg);
+            telemetry.addData("LX", LX);
+            telemetry.addData("LY", LY);
+            telemetry.addData("RX", RX);
+            telemetry.addData("FRA", Robot.FRA);
+            telemetry.addData("FLA", Robot.FLA);
+            telemetry.addData("BRA", Robot.BRA);
+            telemetry.addData("BLA", Robot.BLA);
+            telemetry.addData("FRS", Robot.FRS);
+            telemetry.addData("FLS", Robot.FLS);
+            telemetry.addData("BRs", Robot.BRS);
+            telemetry.addData("BLS", Robot.BLS);
+            telemetry.update();
             idle();
         }
     }

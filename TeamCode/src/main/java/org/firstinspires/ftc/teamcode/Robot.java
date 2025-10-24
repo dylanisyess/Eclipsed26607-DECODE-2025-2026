@@ -40,8 +40,9 @@ public class Robot {
     public ElapsedTime runtime = new ElapsedTime();
     double L = 200;
     double W = 200;
-    double R = sqrt((L*L) + (W*W));
+    double R = 282.84;
     double FWD, STR, RCW, A, B, C, D, FRA, FLA, BLA, BRA, FRS, FLS, BLS, BRS, max;
+    boolean neg;
 
 
     IMU imu;
@@ -89,6 +90,7 @@ public class Robot {
         FWD = LY;
         STR = LX;
         RCW = RX;
+        neg = false;
 
         A = STR - RCW*(L/R);
         B = STR + RCW*(L/R);
@@ -105,59 +107,48 @@ public class Robot {
         BLA = atan2(A,D)*180/Math.PI;
         BRA = atan2(A,C)*180/Math.PI;
 
-        max = FRS;
-        if (FLS > max) {max = FLS;}
-        if (BLS > max) {max = BLS;}
-        if (BRS > max) {max = BRS;}
-
-        FRS /= max;
-        FLS /= max;
-        BLS /= max;
-        BRS /= max;
-
         if (FRA < 0) {
-            FRA =- 180;
+//            FRA =- 180;
             FRS =  FRS * -1;
+            neg = true;
         }
         if (FLA < 0) {
-            FLA =- 180;
+//            FLA =- 180;
             FLS =  FLS * -1;
         }
         if (BLA < 0) {
-            BLA =- 180;
+//            BLA =- 180;
             BLS =  BLS * -1;
         }
         if (BRA < 0) {
-            BRA =- 180;
+//            BRA =- 180;
             BRS =  BRS * -1;
         }
 
-        if (FRA > 63.5) {
-            FRA =- 180;
-            FRS =  FRS * -1;
-        }
-        if (FLA < 0) {
-            FLA =- 180;
-            FLS =  FLS * -1;
-        }
-        if (BLA < 0) {
-            BLA =- 180;
-            BLS =  BLS * -1;
-        }
-        if (BRA < 0) {
-            BRA =- 180;
-            BRS =  BRS * -1;
-        }
+        FRA = (FRA + 180)/360.0;
+        FLA = (FLA + 180)/360.0;
+        BLA = (BLA + 180)/360.0;
+        BRA = (BRA + 180)/360.0;
+
+//        max = FRS;
+//        if (FLS > max) {max = FLS;}
+//        if (BLS > max) {max = BLS;}
+//        if (BRS > max) {max = BRS;}
+//
+//        FRS /= max;
+//        FLS /= max;
+//        BLS /= max;
+//        BRS /= max;
 
         frontRightServo.setPosition(FRA);
         frontLeftServo.setPosition(FLA);
         backLeftServo.setPosition(BLA);
         backRightServo.setPosition(BRA);
 
-        frontRight.setPower(FRA);
-        frontLeft.setPower(FLA);
-        backLeft.setPower(BLA);
-        backRight.setPower(BRA);
+        frontRight.setPower(FRS);
+        frontLeft.setPower(FLS);
+        backLeft.setPower(BLS);
+        backRight.setPower(BRS);
     }
 
     double getHeading() {

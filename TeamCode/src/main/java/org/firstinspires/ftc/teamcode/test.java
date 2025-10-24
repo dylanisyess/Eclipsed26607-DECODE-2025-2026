@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 
-@TeleOp(name="Teleop_final", group="Linear OpMode")
+@TeleOp(name="Test", group="Linear OpMode")
 // @Disabled
 public class test extends LinearOpMode {
     private final Robot Robot = new Robot();
