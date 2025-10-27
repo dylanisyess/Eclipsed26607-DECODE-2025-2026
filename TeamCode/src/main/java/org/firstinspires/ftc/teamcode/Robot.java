@@ -108,27 +108,27 @@ public class Robot {
         BRA = atan2(A,C)*180/Math.PI;
 
         if (FRA < 0) {
-//            FRA =- 180;
-            FRS =  FRS * -1;
+            FRA = FRA * -1;
+            FRS = FRS * -1;
             neg = true;
         }
         if (FLA < 0) {
-//            FLA =- 180;
-            FLS =  FLS * -1;
+            FLA = FLA * -1;
+            FLS = FLS * -1;
         }
         if (BLA < 0) {
-//            BLA =- 180;
-            BLS =  BLS * -1;
+            BLA = BLA * -1;
+            BLS = BLS * -1;
         }
         if (BRA < 0) {
-//            BRA =- 180;
-            BRS =  BRS * -1;
+            BRA = BRA * -1;
+            BRS = BRS * -1;
         }
 
-        FRA = (FRA + 180)/360.0;
-        FLA = (FLA + 180)/360.0;
-        BLA = (BLA + 180)/360.0;
-        BRA = (BRA + 180)/360.0;
+        FRA = (FRA)/180.0;
+        FLA = (FLA)/180.0;
+        BLA = (BLA)/180.0;
+        BRA = (BRA)/180.0;
 
 //        max = FRS;
 //        if (FLS > max) {max = FLS;}

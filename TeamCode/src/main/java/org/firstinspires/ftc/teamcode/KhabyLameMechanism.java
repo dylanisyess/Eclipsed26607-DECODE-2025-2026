@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 
-@TeleOp(name="Test", group="Linear OpMode")
+@TeleOp(name="Khaby Lame Mechanism", group="Linear OpMode")
 // @Disabled
 public class KhabyLameMechanism extends LinearOpMode {
 
@@ -29,12 +29,15 @@ public class KhabyLameMechanism extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-           power = gamepad1.left_stick_y;
-           KhabyLameHands.setPower(power);
-
-
+           if (gamepad1.y) {
+               KhabyLameHands.setPower(0.7);
+            }
+           if (gamepad1.a) {
+               KhabyLameHands.setPower(-0.7);
+           }
+           if (gamepad1.b) {
+               KhabyLameHands.setPower(0);
+           }
         }
-
+     }
     }
-
-}

@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.hardware.lynx.LynxModule;
 
-public class swerve {
+public class chatgptSwerve {
 
     // ---------- robot geometry (use your half-dimensions) ----------
     private static final double LX_HALF = 100;

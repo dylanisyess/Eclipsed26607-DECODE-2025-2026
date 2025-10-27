@@ -4,10 +4,10 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 
-@TeleOp(name="Teleop_final", group="Linear OpMode")
+@TeleOp(name="chatgpt teleop", group="Linear OpMode")
 // @Disabled
-public class Teleop_final extends LinearOpMode {
-    private final swerve Robot = new swerve();
+public class chatgptTeleop extends LinearOpMode {
+    private final chatgptSwerve Robot = new chatgptSwerve();
 
     private static double dead(double v, double eps) {
         return Math.abs(v) < eps ? 0.0 : v;
