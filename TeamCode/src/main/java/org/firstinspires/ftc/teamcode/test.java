@@ -2,41 +2,42 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.firstinspires.ftc.robotcore.external.Telemetry;
+import com.qualcomm.robotcore.hardware.AnalogInput;
 
 
 @TeleOp(name="Test", group="Linear OpMode")
 // @Disabled
 public class test extends LinearOpMode {
-    private final Robot Robot = new Robot();
 
-    //    @Override
+    public AnalogInput frontLeftLamprey;
+    double x;
+    double maxVoltage;
     public void runOpMode() {
-        Robot.init(hardwareMap);
+        frontLeftLamprey = hardwareMap.get(AnalogInput.class, "frontLeftLamprey");
+        maxVoltage = frontLeftLamprey.getMaxVoltage();
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
         // Wait for the game to start (driver presses START).
         waitForStart();
-        Robot.runtime.reset();
+
 
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            double leftStickY = gamepad1.left_stick_y;
-
-            if (leftStickY > 0.1) {
-                Robot.frontRight.setPower(leftStickY);
-            } else {
-                Robot.frontRight.setPower(0);
-            }
-
+            double currentAngle = getCurrentAngleDeg();
+            telemetry.addData("angle", "currentAngle");
         }
+    }
 
+    private double getCurrentAngleDeg() {
+        double volts = frontLeftLamprey.getVoltage();
+        double angle = (volts / maxVoltage) * 360.0;  // 0–360 from Lamprey
+
+//        angle -= angleOffsetDeg;                      // apply per-module offset
+        angle = (angle % 360 + 360) % 360;            // wrap to 0–360
+
+        return angle;
     }
 
 }

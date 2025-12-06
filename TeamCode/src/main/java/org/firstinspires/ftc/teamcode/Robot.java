@@ -1,13 +1,11 @@
 package org.firstinspires.ftc.teamcode;;
 
-import static com.sun.tools.doclint.Entity.pi;
-
 import android.content.Context;
 
-import com.qualcomm.ftccommon.SoundPlayer;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot.LogoFacingDirection;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot.UsbFacingDirection;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotor.RunMode;
 import com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior;
@@ -18,12 +16,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
-import static java.lang.Math.atan2;
-import static java.lang.Math.sqrt;
-import static java.lang.Math.atan2;
-import static java.lang.Math.toDegrees;
-import static java.lang.Math.PI;
+import com.qualcomm.robotcore.hardware.AnalogInput;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
@@ -33,7 +26,10 @@ import java.util.List;
 
 public class Robot {
     public DcMotorEx frontLeft, frontRight, backLeft, backRight;
-    public Servo frontLeftServo, frontRightServo, backLeftServo, backRightServo;
+    public CRServo frontLeftServo, frontRightServo, backLeftServo, backRightServo;
+    public AnalogInput frontLeftLamprey, frontRightLamprey, backLeftLamprey, backRightLamprey;
+    double flOffsetDeg, frOffsetDeg, blOffsetDeg, brOffsetDeg;
+    public DcMotor intake, shooter;
     public DigitalChannel limitSwitch;
     private List<DcMotorEx> motors;
     private Context _appContext;
@@ -62,10 +58,15 @@ public class Robot {
         backRight = hardwareMap.get(DcMotorEx.class, "backRight");
         motors = Arrays.asList(frontLeft, frontRight, backLeft, backRight);
 
-        frontLeftServo = hardwareMap.get(Servo.class, "frontLeftServo");
-        frontRightServo = hardwareMap.get(Servo.class, "frontRightServo");
-        backLeftServo = hardwareMap.get(Servo.class, "backLeftServo");
-        backRightServo = hardwareMap.get(Servo.class, "backRightServo");
+        frontLeftServo = hardwareMap.get(CRServo.class, "frontLeftServo");
+        frontRightServo = hardwareMap.get(CRServo.class, "frontRightServo");
+        backLeftServo = hardwareMap.get(CRServo.class, "backLeftServo");
+        backRightServo = hardwareMap.get(CRServo.class, "backRightServo");
+
+        frontLeftLamprey = hardwareMap.get(AnalogInput.class, "frontLeftLamprey");
+        frontRightLamprey = hardwareMap.get(AnalogInput.class, "frontRightLamprey");
+        backLeftLamprey = hardwareMap.get(AnalogInput.class, "backLeftLamprey");
+        backRightLamprey = hardwareMap.get(AnalogInput.class, "backRightLamprey");
 
         frontLeft.setDirection(Direction.REVERSE);
         frontRight.setDirection(Direction.FORWARD);
@@ -86,75 +87,23 @@ public class Robot {
 
     }
 
-    public void swerve_drive(double LY, double LX, double RX) {
-        FWD = LY;
-        STR = LX;
-        RCW = RX;
-        neg = false;
-
-        A = STR - RCW*(L/R);
-        B = STR + RCW*(L/R);
-        C = FWD - RCW*(W/R);
-        D = FWD + RCW*(W/R);
-
-        FRS = sqrt((B*B)+(C*C));
-        FLS = sqrt((B*B)+(D*D));
-        BLS = sqrt((A*A)+(D*D));
-        BRS = sqrt((A*A)+(C*C));
-
-        FRA = atan2(B,C)*180/Math.PI;
-        FLA = atan2(B,D)*180/Math.PI;
-        BLA = atan2(A,D)*180/Math.PI;
-        BRA = atan2(A,C)*180/Math.PI;
-
-        if (FRA < 0) {
-            FRA = FRA * -1;
-            FRS = FRS * -1;
-            neg = true;
-        }
-        if (FLA < 0) {
-            FLA = FLA * -1;
-            FLS = FLS * -1;
-        }
-        if (BLA < 0) {
-            BLA = BLA * -1;
-            BLS = BLS * -1;
-        }
-        if (BRA < 0) {
-            BRA = BRA * -1;
-            BRS = BRS * -1;
-        }
-
-        FRA = (FRA)/180.0;
-        FLA = (FLA)/180.0;
-        BLA = (BLA)/180.0;
-        BRA = (BRA)/180.0;
-
-//        max = FRS;
-//        if (FLS > max) {max = FLS;}
-//        if (BLS > max) {max = BLS;}
-//        if (BRS > max) {max = BRS;}
-//
-//        FRS /= max;
-//        FLS /= max;
-//        BLS /= max;
-//        BRS /= max;
-
-        frontRightServo.setPosition(FRA);
-        frontLeftServo.setPosition(FLA);
-        backLeftServo.setPosition(BLA);
-        backRightServo.setPosition(BRA);
-
-        frontRight.setPower(FRS);
-        frontLeft.setPower(FLS);
-        backLeft.setPower(BLS);
-        backRight.setPower(BRS);
-    }
-
     double getHeading() {
         YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
         return orientation.getYaw(AngleUnit.DEGREES);
     }
+
+    public void intake() {
+
+    }
+
+    public void shootHard() {
+
+    }
+
+    public void shootSoft() {
+
+    }
+
 }
 
 //

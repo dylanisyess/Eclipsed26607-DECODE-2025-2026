@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 @TeleOp(name="run", group="Linear OpMode")
 // @Disabled
 public class run extends LinearOpMode {
-    private final Robot Robot = new Robot();
+    private final RobotOld Robot = new RobotOld();
 
     //    @Override
     public void runOpMode() {
