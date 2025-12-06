@@ -30,6 +30,18 @@ public class teleop extends LinearOpMode {
             vy = gamepad1.left_stick_y;
             omega = gamepad1.right_stick_x;
             SwerveDrive.drive(vx, vy, omega);
+
+            if (gamepad1.b) {
+                Robot.intake();
+            }
+
+            if (gamepad1.dpad_up) {
+                Robot.shootHard();
+            }
+
+            if (gamepad1.dpad_down) {
+                Robot.shootSoft();
+            }
         }
     }
 }
