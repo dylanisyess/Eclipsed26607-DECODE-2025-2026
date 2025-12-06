@@ -5,9 +5,9 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 
 
-@TeleOp(name="Test", group="Linear OpMode")
+@TeleOp(name="LampreyTest", group="Linear OpMode")
 // @Disabled
-public class test extends LinearOpMode {
+public class lampreyTest extends LinearOpMode {
 
     public AnalogInput frontLeftLamprey;
     double x;
