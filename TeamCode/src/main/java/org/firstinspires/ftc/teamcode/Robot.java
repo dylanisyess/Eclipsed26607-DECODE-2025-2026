@@ -29,14 +29,14 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Robot {
-    public DcMotorEx frontLeft, frontRight, backLeft, backRight;
+    public DcMotor frontLeft, frontRight, backLeft, backRight;
     public CRServo frontLeftServo, frontRightServo, backLeftServo, backRightServo;
     public AnalogInput frontLeftLamprey, frontRightLamprey, backLeftLamprey, backRightLamprey;
     double flOffsetDeg, frOffsetDeg, blOffsetDeg, brOffsetDeg;
     public DcMotor intake;
     public DcMotorEx shooter;
     public DigitalChannel limitSwitch;
-    private List<DcMotorEx> motors;
+    private List<DcMotor> motors;
     private Context _appContext;
     public ElapsedTime runtime = new ElapsedTime();
     double L = 200;
@@ -57,10 +57,10 @@ public class Robot {
     int handMode;
 
     public void init(HardwareMap hardwareMap) {
-        frontLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");
-        frontRight = hardwareMap.get(DcMotorEx.class, "frontRight");
-        backLeft = hardwareMap.get(DcMotorEx.class, "backLeft");
-        backRight = hardwareMap.get(DcMotorEx.class, "backRight");
+        frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
+        frontRight = hardwareMap.get(DcMotor.class, "frontRight");
+        backLeft = hardwareMap.get(DcMotor.class, "backLeft");
+        backRight = hardwareMap.get(DcMotor.class, "backRight");
         motors = Arrays.asList(frontLeft, frontRight, backLeft, backRight);
 
         frontLeftServo = hardwareMap.get(CRServo.class, "frontLeftServo");
@@ -76,12 +76,15 @@ public class Robot {
         intake = hardwareMap.get(DcMotor.class, "intake");
         shooter = hardwareMap.get(DcMotorEx.class, "shooter");
 
-        frontLeft.setDirection(Direction.REVERSE);
+        frontLeft.setDirection(Direction.FORWARD);
         frontRight.setDirection(Direction.FORWARD);
-        backLeft.setDirection(Direction.REVERSE);
+        backLeft.setDirection(Direction.FORWARD);
         backRight.setDirection(Direction.FORWARD);
 
-        shooter.setMode(RunMode.RUN_TO_POSITION);
+        frontLeft.setZeroPowerBehavior(ZeroPowerBehavior.BRAKE);
+        frontRight.setZeroPowerBehavior(ZeroPowerBehavior.BRAKE);
+        backLeft.setZeroPowerBehavior(ZeroPowerBehavior.BRAKE);
+        backRight.setZeroPowerBehavior(ZeroPowerBehavior.BRAKE);
 
         imu = hardwareMap.get(IMU.class, "imu");
         imu.initialize(new IMU.Parameters(
@@ -90,7 +93,7 @@ public class Robot {
 
         _appContext = hardwareMap.appContext;
 
-        for (DcMotorEx motor : motors) {
+        for (DcMotor motor : motors) {
             motor.setZeroPowerBehavior(ZeroPowerBehavior.BRAKE);
             motor.setMode(RunMode.RUN_WITHOUT_ENCODER);
         }

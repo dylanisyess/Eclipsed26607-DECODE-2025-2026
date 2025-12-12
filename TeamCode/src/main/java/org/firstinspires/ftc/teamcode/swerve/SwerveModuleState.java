@@ -4,8 +4,8 @@ public class SwerveModuleState {
     public double speed;
     public double angle;
 
-    public SwerveModuleState(double speed, double angleDeg) {
+    public SwerveModuleState(double speed, double angle) {
         this.speed = speed;
-        this.angle = angleDeg;
+        this.angle = angle;
     }
 }

@@ -9,11 +9,12 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 @TeleOp(name="ShooterTest", group="Linear OpMode")
 // @Disabled
 public class shooterTest extends LinearOpMode {
-    public DcMotorEx shooter;
+    public DcMotor shooter;
+    boolean shooting;
 
     public void runOpMode() {
-        shooter = hardwareMap.get(DcMotorEx.class, "shooter");
-        shooter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        shooter = hardwareMap.get(DcMotor.class, "shooter");
+        shooting = false;
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
@@ -28,41 +29,66 @@ public class shooterTest extends LinearOpMode {
                 shootHard();
             }
 
-            if (gamepad1.dpad_down) {
+            else if (gamepad1.dpad_right) {
+                shootMiddleHard();
+            }
+
+            else if (gamepad1.dpad_down) {
+                shootMiddleSoft();
+            }
+
+            else if (gamepad1.dpad_left) {
                 shootSoft();
             }
-            telemetry.addData("angle", "currentAngle");
+
+            else {
+                shooter.setPower(0);
+            }
         }
     }
 
     public void shootHard() {
-        shooter.setTargetPosition(96);
-        shooter.setPower(1);
-        while (shooter.isBusy()) {
-
+        if (shooting == false) {
+            shooter.setPower(1);
+            shooting = true;
         }
-        shooter.setPower(0);
-        shooter.setTargetPosition(0);
-        shooter.setPower(0.5);
-        while (shooter.isBusy()) {
-
+        else {
+            shooter.setPower(0);
+            shooting = false;
         }
-        shooter.setPower(0);
     }
 
     public void shootSoft() {
-        shooter.setTargetPosition(96);
-        shooter.setPower(0.5);
-        while (shooter.isBusy()) {
-
+        if (shooting == false) {
+            shooter.setPower(0.3);
+            shooting = true;
         }
-        shooter.setPower(0);
-        shooter.setTargetPosition(0);
-        shooter.setPower(0.5);
-        while (shooter.isBusy()) {
-
+        else {
+            shooter.setPower(0);
+            shooting = false;
         }
-        shooter.setPower(0);
+    }
+
+    public void shootMiddleHard() {
+        if (shooting == false) {
+            shooter.setPower(0.8);
+            shooting = true;
+        }
+        else {
+            shooter.setPower(0);
+            shooting = false;
+        }
+    }
+
+    public void shootMiddleSoft() {
+        if (shooting == false) {
+            shooter.setPower(0.6);
+            shooting = true;
+        }
+        else {
+            shooter.setPower(0);
+            shooting = false;
+        }
     }
 }
 

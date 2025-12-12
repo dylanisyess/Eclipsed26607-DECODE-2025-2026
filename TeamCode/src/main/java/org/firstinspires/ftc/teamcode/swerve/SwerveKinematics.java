@@ -1,74 +1,67 @@
 package org.firstinspires.ftc.teamcode.swerve;
 
-import static java.lang.Math.atan2;
-import static java.lang.Math.sqrt;
-
 public class SwerveKinematics {
-    double trackLength;
-    double trackWidth;
-    double L = 200;
-    double W = 200;
-    double R = 282.84;
-    double FWD, STR, RCW, A, B, C, D, FRA, FLA, BLA, BRA, FRS, FLS, BLS, BRS, max;
-    boolean neg;
 
-    public SwerveKinematics (double trackLength, double trackWidth){
-        this.trackLength = trackLength;
-        this.trackWidth = trackWidth;
+    // Robot geometry (same units for both: m, in, whatever)
+    // L = front–back distance between module centers
+    // W = left–right distance between module centers
+    private final double L;
+    private final double W;
+
+    public SwerveKinematics(double trackLength, double trackWidth) {
+        this.L = trackLength;
+        this.W = trackWidth;
     }
 
-    public SwerveModuleState[] toModuleStates (double vx, double vy, double omega) {
+    /**
+     * Robot-centric kinematics.
+     *
+     * vx  = strafe speed  (+ right,  - left)
+     * vy  = forward speed (+ forward, - backward)
+     * omega = rotation rate (+ CCW,  - CW)
+     *
+     * Returns [FL, FR, BL, BR] module states.
+     */
+    public SwerveModuleState[] toModuleStates(double vx, double vy, double omega) {
 
-        FWD = vy;
-        STR = vx;
-        RCW = omega;
-        neg = false;
+        // Combine translation and rotation for each corner
+        double A = vx - omega * (L / 2.0);
+        double B = vx + omega * (L / 2.0);
+        double C = vy - omega * (W / 2.0);
+        double D = vy + omega * (W / 2.0);
 
-        A = STR - RCW*(L/R);
-        B = STR + RCW*(L/R);
-        C = FWD - RCW*(W/R);
-        D = FWD + RCW*(W/R);
+        // Velocity vectors for each module
+        // (x = strafe component, y = forward component)
+        SwerveModuleState fl = new SwerveModuleState(
+                Math.hypot(B, D),
+                Math.toDegrees(Math.atan2(B, D))
+        );
+        SwerveModuleState fr = new SwerveModuleState(
+                Math.hypot(B, C),
+                Math.toDegrees(Math.atan2(B, C))
+        );
+        SwerveModuleState bl = new SwerveModuleState(
+                Math.hypot(A, D),
+                Math.toDegrees(Math.atan2(A, D))
+        );
+        SwerveModuleState br = new SwerveModuleState(
+                Math.hypot(A, C),
+                Math.toDegrees(Math.atan2(A, C))
+        );
 
-        FRS = sqrt((B*B)+(C*C));
-        FLS = sqrt((B*B)+(D*D));
-        BLS = sqrt((A*A)+(D*D));
-        BRS = sqrt((A*A)+(C*C));
+        // Normalize speeds so the fastest wheel is 1.0
+        double max = Math.max(
+                Math.max(fl.speed, fr.speed),
+                Math.max(bl.speed, br.speed)
+        );
 
-        FRA = atan2(B,C)*180/Math.PI;
-        FLA = atan2(B,D)*180/Math.PI;
-        BLA = atan2(A,D)*180/Math.PI;
-        BRA = atan2(A,C)*180/Math.PI;
-
-        if (FRA < 0) {
-            FRA = FRA * -1;
-            FRS = FRS * -1;
-            neg = true;
+        if (max > 1.0) {
+            fl.speed /= max;
+            fr.speed /= max;
+            bl.speed /= max;
+            br.speed /= max;
         }
-        if (FLA < 0) {
-            FLA = FLA * -1;
-            FLS = FLS * -1;
-        }
-        if (BLA < 0) {
-            BLA = BLA * -1;
-            BLS = BLS * -1;
-        }
-        if (BRA < 0) {
-            BRA = BRA * -1;
-            BRS = BRS * -1;
-        }
 
-        FRA = (FRA)/180.0;
-        FLA = (FLA)/180.0;
-        BLA = (BLA)/180.0;
-        BRA = (BRA)/180.0;
-
-
-        SwerveModuleState fl = new SwerveModuleState(FLS, FLA);
-        SwerveModuleState fr = new SwerveModuleState(FRS, FRA);
-        SwerveModuleState bl = new SwerveModuleState(BLS, BLA);
-        SwerveModuleState br = new SwerveModuleState(BRS, BRA);
-
-        return new SwerveModuleState[] {fl, fr, bl, br};
+        return new SwerveModuleState[] { fl, fr, bl, br };
     }
-
 }

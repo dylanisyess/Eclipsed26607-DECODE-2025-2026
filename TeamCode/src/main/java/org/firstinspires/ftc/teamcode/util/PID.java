@@ -6,6 +6,7 @@ public class PID {
     private double integral;
     private double prevError;
     private double prevTime;
+    private double integralLim = 0.25;
 
     public PID(double kP, double kI, double kD) {
         this.kP = kP;
@@ -30,8 +31,16 @@ public class PID {
 
         prevError = error;
 
-        // PID output
-        return kP * error + kI * integral + kD * derivative;
+        double integralSum = kI * integral;
+
+        if (integralSum > integralLim) {
+            integralSum = integralLim;
+        }
+        if (integralSum < -integralLim) {
+            integralSum = -integralLim;
+        }
+
+        return kP * error + integralSum + kD * derivative;
     }
 
     public void reset() {
