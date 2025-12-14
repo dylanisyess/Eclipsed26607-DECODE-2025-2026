@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.swerve;
 
+import static java.lang.Math.sqrt;
+
 public class SwerveKinematics {
 
     // Robot geometry (same units for both: m, in, whatever)
@@ -25,10 +27,11 @@ public class SwerveKinematics {
     public SwerveModuleState[] toModuleStates(double vx, double vy, double omega) {
 
         // Combine translation and rotation for each corner
-        double A = vx - omega * (L / 2.0);
-        double B = vx + omega * (L / 2.0);
-        double C = vy - omega * (W / 2.0);
-        double D = vy + omega * (W / 2.0);
+        double R = sqrt(L*L + W*W);
+        double A = vx - omega * (L / R);
+        double B = vx + omega * (L / R);
+        double C = vy - omega * (W / R);
+        double D = vy + omega * (W / R);
 
         // Velocity vectors for each module
         // (x = strafe component, y = forward component)
@@ -61,6 +64,10 @@ public class SwerveKinematics {
             bl.speed /= max;
             br.speed /= max;
         }
+
+        fr.speed = -fr.speed;
+        br.speed = -br.speed;
+        bl.speed = -bl.speed;
 
         return new SwerveModuleState[] { fl, fr, bl, br };
     }

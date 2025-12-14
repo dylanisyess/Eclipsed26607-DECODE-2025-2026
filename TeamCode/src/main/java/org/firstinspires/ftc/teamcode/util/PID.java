@@ -7,6 +7,8 @@ public class PID {
     private double prevError;
     private double prevTime;
     private double integralLim = 0.25;
+    private double PIDMin = 0.1;
+    private double PID;
 
     public PID(double kP, double kI, double kD) {
         this.kP = kP;
@@ -40,7 +42,17 @@ public class PID {
             integralSum = -integralLim;
         }
 
-        return kP * error + integralSum + kD * derivative;
+        PID = kP * error + integralSum + kD * derivative;
+
+        if (PID < PIDMin && PID > -PIDMin) {
+            if (PID > 0) {
+                PID = PIDMin;
+            } else if (PID < 0) {
+                PID = -PIDMin;
+            }
+        }
+
+        return PID;
     }
 
     public void reset() {
