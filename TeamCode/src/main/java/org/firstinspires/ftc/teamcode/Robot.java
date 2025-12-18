@@ -107,7 +107,7 @@ public class Robot {
 
     public void intake() {
         if (intaking == false)  {
-            intake.setPower(0.7);
+            intake.setPower(1);
             intaking = true;
         }
         else  {
