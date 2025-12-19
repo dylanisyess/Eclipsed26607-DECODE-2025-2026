@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.swerve;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.util.PID;
 
 public class SwerveModule {
@@ -28,8 +27,8 @@ public class SwerveModule {
     }
 
     public void setDesiredState(SwerveModuleState state) {
-        double targetSpeed = state.speed;      // from kinematics
-        double targetAngle = state.angle;   // from kinematics
+        double targetSpeed = state.speed;
+        double targetAngle = state.angle;
 
         double currentAngle = getCurrentAngleDeg();
         double error = angleErrorDeg(targetAngle, currentAngle);
@@ -43,7 +42,6 @@ public class SwerveModule {
         double steerOutput = PID.calculate(error);
 
 
-//        double steerOutput = error / 180;
         steerOutput = com.qualcomm.robotcore.util.Range.clip(steerOutput, -1.0, 1.0);
 
         steer.setPower(steerOutput);
@@ -53,17 +51,17 @@ public class SwerveModule {
 
     public double getCurrentAngleDeg() {
         double volts = lamprey.getVoltage();
-        double angle = (volts / 2.169) * 360.0;  // 0–360 from Lamprey
+        double angle = (volts / 2.169) * 360.0;
 
-        angle -= angleOffsetDeg;                      // apply per-module offset
-        angle = (angle % 360 + 360) % 360;            // wrap to 0–360
+        angle -= angleOffsetDeg;
+        angle = (angle % 360 + 360) % 360;
 
         return angle;
     }
 
     public double angleErrorDeg(double target, double current) {
         double error = target - current;
-        error = (error + 540) % 360 - 180;  // now in (-180, 180]
+        error = (error + 540) % 360 - 180;
         return error;
     }
 

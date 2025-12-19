@@ -24,7 +24,6 @@ public class swervedebug extends LinearOpMode {
 
         while (opModeIsActive()) {
 
-            // target angle from gamepad for testing
             double targetAngle = 0;
             if (gamepad1.a) targetAngle = 0;
             if (gamepad1.b) targetAngle = 90;
@@ -33,7 +32,6 @@ public class swervedebug extends LinearOpMode {
 
             SwerveModuleState state = new SwerveModuleState(0, targetAngle);
 
-            // only steer, no drive
             fl.setDesiredState(state);
             fr.setDesiredState(state);
             bl.setDesiredState(state);

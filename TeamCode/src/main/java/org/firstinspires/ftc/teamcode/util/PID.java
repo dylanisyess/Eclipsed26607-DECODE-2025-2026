@@ -25,10 +25,8 @@ public class PID {
         double dt = currentTime - prevTime;
         prevTime = currentTime;
 
-        // Integral term (accumulator)
         integral += error * dt;
 
-        // Derivative term
         double derivative = (dt > 0) ? (error - prevError) / dt : 0;
 
         prevError = error;
