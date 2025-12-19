@@ -76,9 +76,9 @@ public class Robot {
         intake = hardwareMap.get(DcMotor.class, "intake");
         shooter = hardwareMap.get(DcMotorEx.class, "shooter");
 
-        frontLeft.setDirection(Direction.FORWARD);
+        frontLeft.setDirection(Direction.REVERSE);
         frontRight.setDirection(Direction.FORWARD);
-        backLeft.setDirection(Direction.FORWARD);
+        backLeft.setDirection(Direction.REVERSE);
         backRight.setDirection(Direction.FORWARD);
 
         frontLeft.setZeroPowerBehavior(ZeroPowerBehavior.BRAKE);
