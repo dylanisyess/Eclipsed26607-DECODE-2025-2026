@@ -73,13 +73,13 @@ public class Robot {
         backLeftLamprey = hardwareMap.get(AnalogInput.class, "backLeftLamprey");
         backRightLamprey = hardwareMap.get(AnalogInput.class, "backRightLamprey");
 
-        intake = hardwareMap.get(DcMotor.class, "intake");
+//        intake = hardwareMap.get(DcMotor.class, "intake");
         shooter = hardwareMap.get(DcMotorEx.class, "shooter");
 
         frontLeft.setDirection(Direction.REVERSE);
-        frontRight.setDirection(Direction.FORWARD);
+        frontRight.setDirection(Direction.REVERSE);
         backLeft.setDirection(Direction.REVERSE);
-        backRight.setDirection(Direction.FORWARD);
+        backRight.setDirection(Direction.REVERSE);
 
         frontLeft.setZeroPowerBehavior(ZeroPowerBehavior.BRAKE);
         frontRight.setZeroPowerBehavior(ZeroPowerBehavior.BRAKE);
@@ -105,16 +105,16 @@ public class Robot {
         return orientation.getYaw(AngleUnit.DEGREES);
     }
 
-    public void intake() {
-        if (intaking == false)  {
-            intake.setPower(1);
-            intaking = true;
-        }
-        else  {
-            intake.setPower(0);
-            intaking = false;
-        }
-    }
+//    public void intake() {
+//        if (intaking == false)  {
+//            intake.setPower(1);
+//            intaking = true;
+//        }
+//        else  {
+//            intake.setPower(0);
+//            intaking = false;
+//        }
+//    }
 
     public void shootHard() {
         shooter.setTargetPosition(96);
