@@ -28,6 +28,8 @@ public class teleop extends LinearOpMode {
         final SwerveModule br = new SwerveModule(Robot.backRight, Robot.backRightServo, Robot.backRightLamprey, 0.0025, 0, 0.0004, 0);
         final SwerveDrive SwerveDrive = new SwerveDrive(fl, fr, bl, br, 1, 1);
 
+        Robot.shooting = false;
+
         telemetry.addData("Status", "Initialized");
         telemetry.update();
         waitForStart();
@@ -40,27 +42,58 @@ public class teleop extends LinearOpMode {
             omega = gamepad1.right_stick_x;
             SwerveDrive.drive(vx, vy, omega);
 
-//            if (gamepad1.b) {
-//                Robot.intake();
-//            }
-
-            if (gamepad1.dpad_up) {
-                Robot.shootHard();
+            if (gamepad1.a) {
+                if (Robot.intaking == false) {
+                    Robot.intake.setPower(1);
+                    Robot.intaking = true;
+                } else {
+                    Robot.intake.setPower(0);
+                    Robot.intaking = false;
+                }
             }
+                if (gamepad1.dpad_up) {
+                    if (Robot.shooting == false) {
+                        Robot.shooter.setPower(1);
+                        Robot.shooting = true;
+                    } else {
+                        Robot.shooter.setPower(0);
+                        Robot.shooting = false;
+                    }
+                } else if (gamepad1.dpad_right) {
+                    if (Robot.shooting == false) {
+                        Robot.shooter.setPower(0.8);
+                        Robot.shooting = true;
+                    } else {
+                        Robot.shooter.setPower(0);
+                        Robot.shooting = false;
+                    }
+                } else if (gamepad1.dpad_down) {
+                    if (Robot.shooting == false) {
+                        Robot.shooter.setPower(0.6);
+                        Robot.shooting = true;
+                    } else {
+                        Robot.shooter.setPower(0);
+                        Robot.shooting = false;
+                    }
+                } else if (gamepad1.dpad_left) {
+                    if (Robot.shooting == false) {
+                        Robot.shooter.setPower(0.3);
+                        Robot.shooting = true;
+                    } else {
+                        Robot.shooter.setPower(0);
+                        Robot.shooting = false;
+                    }
+                }
 
-            if (gamepad1.dpad_down) {
-                Robot.shootSoft();
-            }
-
-
-            telemetry.addData("FL angle", fl.getCurrentAngleDeg());
-            telemetry.addData("FR angle", fr.getCurrentAngleDeg());
-            telemetry.addData("BL angle", bl.getCurrentAngleDeg());
-            telemetry.addData("BR angle", br.getCurrentAngleDeg());
-            telemetry.addData("FR angle", fr.getCurrentAngleDeg());
-            telemetry.addData("BL angle", bl.getCurrentAngleDeg());
-            telemetry.addData("BR angle", br.getCurrentAngleDeg());
-            telemetry.update();
+                telemetry.addData("FL angle", fl.getCurrentAngleDeg());
+                telemetry.addData("FR angle", fr.getCurrentAngleDeg());
+                telemetry.addData("BL angle", bl.getCurrentAngleDeg());
+                telemetry.addData("BR angle", br.getCurrentAngleDeg());
+                telemetry.addData("FR angle", fr.getCurrentAngleDeg());
+                telemetry.addData("BL angle", bl.getCurrentAngleDeg());
+                telemetry.addData("BR angle", br.getCurrentAngleDeg());
+                telemetry.update();
         }
     }
 }
+

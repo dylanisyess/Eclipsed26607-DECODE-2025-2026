@@ -36,9 +36,7 @@ public class auto extends LinearOpMode {
 
         Robot.runtime.reset();
 
-       double targetAngle = 0;
-
-        SwerveModuleState state = new SwerveModuleState(0, targetAngle);
+        SwerveModuleState state = new SwerveModuleState(0, 30);
 
         fl.setDesiredState(state);
         fr.setDesiredState(state);
@@ -56,11 +54,11 @@ public class auto extends LinearOpMode {
         telemetry.addData("BR angle", br.getCurrentAngleDeg());
         telemetry.update();
 
-        SwerveModuleState state2 = new SwerveModuleState(-0.5, targetAngle);
-        SwerveModuleState state2L = new SwerveModuleState(-0.5, targetAngle);
+        SwerveModuleState state2 = new SwerveModuleState(-0.5, 30);
+        SwerveModuleState state2L = new SwerveModuleState(-0.5, 30);
 
         resetRuntime();
-        while (timer < 3 ) {
+        while (timer < 7) {
             fl.setDesiredState(state2L);
             fr.setDesiredState(state2);
             bl.setDesiredState(state2L);
@@ -68,7 +66,7 @@ public class auto extends LinearOpMode {
             timer = getRuntime();
         }
 
-        SwerveModuleState state3 = new SwerveModuleState(0, targetAngle);
+        SwerveModuleState state3 = new SwerveModuleState(0, 30);
 
         fl.setDesiredState(state3);
         fr.setDesiredState(state3);

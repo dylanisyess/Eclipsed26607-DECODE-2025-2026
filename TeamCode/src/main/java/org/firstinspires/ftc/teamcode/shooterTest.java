@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 
 @TeleOp(name="ShooterTest", group="Linear OpMode")
@@ -18,6 +19,7 @@ public class shooterTest extends LinearOpMode {
 
     public void runOpMode() {
         shooter = hardwareMap.get(DcMotor.class, "shooter");
+        shooter.setDirection(DcMotorSimple.Direction.REVERSE);
         shooting = false;
         telemetry.addData("Status", "Initialized");
         telemetry.update();

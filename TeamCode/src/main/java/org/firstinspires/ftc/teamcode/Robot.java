@@ -73,7 +73,7 @@ public class Robot {
         backLeftLamprey = hardwareMap.get(AnalogInput.class, "backLeftLamprey");
         backRightLamprey = hardwareMap.get(AnalogInput.class, "backRightLamprey");
 
-//        intake = hardwareMap.get(DcMotor.class, "intake");
+        intake = hardwareMap.get(DcMotor.class, "intake");
         shooter = hardwareMap.get(DcMotorEx.class, "shooter");
 
         frontLeft.setDirection(Direction.REVERSE );
