@@ -22,9 +22,9 @@ public class teleop extends LinearOpMode {
         telemetry.update();
         sleep(3000);
 
-        final SwerveModule fl = new SwerveModule(Robot.frontLeft, Robot.frontLeftServo, Robot.frontLeftLamprey, 0.0025, 0, 0.0004, 0);
-        final SwerveModule fr = new SwerveModule(Robot.frontRight, Robot.frontRightServo, Robot.frontRightLamprey, 0.0025, 0, 0.0004, 0);
-        final SwerveModule bl = new SwerveModule(Robot.backLeft, Robot.backLeftServo, Robot.backLeftLamprey, 0.0025, 0, 0.0004, 0);
+        final SwerveModule fl = new SwerveModule(Robot.frontLeft, Robot.frontLeftServo, Robot.frontLeftLamprey, 0.0025, 0, 0.0004, -2);
+        final SwerveModule fr = new SwerveModule(Robot.frontRight, Robot.frontRightServo, Robot.frontRightLamprey, 0.0025, 0, 0.0004, -2);
+        final SwerveModule bl = new SwerveModule(Robot.backLeft, Robot.backLeftServo, Robot.backLeftLamprey, 0.0025, 0, 0.0004, 2);
         final SwerveModule br = new SwerveModule(Robot.backRight, Robot.backRightServo, Robot.backRightLamprey, 0.0025, 0, 0.0004, 0);
         final SwerveDrive SwerveDrive = new SwerveDrive(fl, fr, bl, br, 1, 1);
 
@@ -42,48 +42,36 @@ public class teleop extends LinearOpMode {
             omega = gamepad1.right_stick_x;
             SwerveDrive.drive(vx, vy, omega);
 
-            if (gamepad1.a) {
-                if (Robot.intaking == false) {
-                    Robot.intake.setPower(1);
-                    Robot.intaking = true;
-                } else {
-                    Robot.intake.setPower(0);
-                    Robot.intaking = false;
-                }
+            if (gamepad1.y) {
+                Robot.intake.setPower(1);
             }
-                if (gamepad1.dpad_up) {
-                    if (Robot.shooting == false) {
-                        Robot.shooter.setPower(1);
-                        Robot.shooting = true;
-                    } else {
-                        Robot.shooter.setPower(0);
-                        Robot.shooting = false;
-                    }
-                } else if (gamepad1.dpad_right) {
-                    if (Robot.shooting == false) {
-                        Robot.shooter.setPower(0.8);
-                        Robot.shooting = true;
-                    } else {
-                        Robot.shooter.setPower(0);
-                        Robot.shooting = false;
-                    }
-                } else if (gamepad1.dpad_down) {
-                    if (Robot.shooting == false) {
-                        Robot.shooter.setPower(0.6);
-                        Robot.shooting = true;
-                    } else {
-                        Robot.shooter.setPower(0);
-                        Robot.shooting = false;
-                    }
-                } else if (gamepad1.dpad_left) {
-                    if (Robot.shooting == false) {
-                        Robot.shooter.setPower(0.3);
-                        Robot.shooting = true;
-                    } else {
-                        Robot.shooter.setPower(0);
-                        Robot.shooting = false;
-                    }
-                }
+            if (gamepad1.b) {
+                Robot.intake.setPower(0.8);
+            }
+            if (gamepad1.a) {
+                Robot.intake.setPower(0.6);
+            }
+            if (gamepad1.x) {
+                Robot.intake.setPower(0);
+            }
+
+            if (gamepad1.right_bumper) {
+                Robot.intake.setPower(-0.5);
+            }
+
+            if (gamepad1.dpad_up) {
+                Robot.shooter.setPower(1);
+            }
+            if (gamepad1.dpad_right) {
+                Robot.shooter.setPower(0.8);
+            }
+            if (gamepad1.dpad_down) {
+                Robot.shooter.setPower(0.6);
+            }
+            if (gamepad1.dpad_left) {
+                Robot.shooter.setPower(0);
+            }
+
 
                 telemetry.addData("FL angle", fl.getCurrentAngleDeg());
                 telemetry.addData("FR angle", fr.getCurrentAngleDeg());

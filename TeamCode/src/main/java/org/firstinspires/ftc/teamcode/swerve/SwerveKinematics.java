@@ -49,10 +49,6 @@ public class SwerveKinematics {
             br.speed /= max;
         }
 
-        fr.speed = -fr.speed;
-        br.speed = -br.speed;
-        bl.speed = -bl.speed;
-
         return new SwerveModuleState[] { fl, fr, bl, br };
     }
 }

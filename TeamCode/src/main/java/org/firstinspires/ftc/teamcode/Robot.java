@@ -76,10 +76,12 @@ public class Robot {
         intake = hardwareMap.get(DcMotor.class, "intake");
         shooter = hardwareMap.get(DcMotorEx.class, "shooter");
 
-        frontLeft.setDirection(Direction.REVERSE );
-        frontRight.setDirection(Direction.REVERSE);
-        backLeft.setDirection(Direction.FORWARD);
-        backRight.setDirection(Direction.REVERSE);
+        frontLeft.setDirection(Direction.REVERSE);
+        frontRight.setDirection(Direction.FORWARD);
+        backLeft.setDirection(Direction.REVERSE);
+        backRight.setDirection(Direction.FORWARD);
+        intake.setDirection(Direction.REVERSE);
+        shooter.setDirection(Direction.REVERSE);
 
         frontLeft.setZeroPowerBehavior(ZeroPowerBehavior.BRAKE);
         frontRight.setZeroPowerBehavior(ZeroPowerBehavior.BRAKE);
@@ -88,7 +90,7 @@ public class Robot {
 
         imu = hardwareMap.get(IMU.class, "imu");
         imu.initialize(new IMU.Parameters(
-                new RevHubOrientationOnRobot(LogoFacingDirection.RIGHT, UsbFacingDirection.FORWARD)));
+                new RevHubOrientationOnRobot(LogoFacingDirection.LEFT, UsbFacingDirection.UP)));
         imu.resetYaw();
 
         _appContext = hardwareMap.appContext;
