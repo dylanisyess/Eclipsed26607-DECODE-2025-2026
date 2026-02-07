@@ -43,7 +43,7 @@ public class autoBackLeft extends LinearOpMode {
         SwerveModuleState move0 = new SwerveModuleState(0.8, 0);
         timer = 0;
         resetRuntime();
-        while (timer < 3.1) {
+        while (timer < 2.8) {
             fl.setDesiredState(move0);
             fr.setDesiredState(move0);
             bl.setDesiredState(move0);
@@ -75,7 +75,7 @@ public class autoBackLeft extends LinearOpMode {
         SwerveModuleState move1L = new SwerveModuleState(-0.8, 0);
         timer = 0;
         resetRuntime();
-        while (timer < 0.4) {
+        while (timer < 0.45) {
             fl.setDesiredState(move1L);
             fr.setDesiredState(move1R);
             bl.setDesiredState(move1L);
@@ -94,7 +94,7 @@ public class autoBackLeft extends LinearOpMode {
         }
 
 //        shoot
-        Robot.shooter.setPower(0.9);
+        Robot.shooter.setPower(0.75);
         timer = 0;
         resetRuntime();
         while (timer < 2) {
@@ -130,7 +130,7 @@ public class autoBackLeft extends LinearOpMode {
         SwerveModuleState move2 = new SwerveModuleState(-0.8, 45);
         timer = 0;
         resetRuntime();
-        while (timer < 3) {
+        while (timer < 2) {
             fl.setDesiredState(move2);
             fr.setDesiredState(move2);
             bl.setDesiredState(move2);
@@ -162,7 +162,7 @@ public class autoBackLeft extends LinearOpMode {
         SwerveModuleState move3R = new SwerveModuleState(0.8, 0);
         timer = 0;
         resetRuntime();
-        while (timer < 1.4) {
+        while (timer < 0.5) {
             fl.setDesiredState(move3L);
             fr.setDesiredState(move3R);
             bl.setDesiredState(move3L);

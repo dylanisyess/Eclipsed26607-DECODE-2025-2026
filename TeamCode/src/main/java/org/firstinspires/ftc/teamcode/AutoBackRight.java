@@ -43,7 +43,7 @@ public class AutoBackRight extends LinearOpMode {
         SwerveModuleState move0 = new SwerveModuleState(0.8, 0);
         timer = 0;
         resetRuntime();
-        while (timer < 3.1) {
+        while (timer < 2.9) {
             fl.setDesiredState(move0);
             fr.setDesiredState(move0);
             bl.setDesiredState(move0);
@@ -75,7 +75,7 @@ public class AutoBackRight extends LinearOpMode {
         SwerveModuleState move1L = new SwerveModuleState(0.8, 0);
         timer = 0;
         resetRuntime();
-        while (timer < 0.4) {
+        while (timer < 0.45) {
             fl.setDesiredState(move1L);
             fr.setDesiredState(move1R);
             bl.setDesiredState(move1L);
@@ -127,17 +127,17 @@ public class AutoBackRight extends LinearOpMode {
             br.setDesiredState(move2align);
             timer = getRuntime();
         }
-        SwerveModuleState move2 = new SwerveModuleState(-0.8, 45);
+        SwerveModuleState move2 = new SwerveModuleState(-0.8, 315);
         timer = 0;
         resetRuntime();
-        while (timer < 3) {
+        while (timer < 2) {
             fl.setDesiredState(move2);
             fr.setDesiredState(move2);
             bl.setDesiredState(move2);
             br.setDesiredState(move2);
             timer = getRuntime();
         }
-        SwerveModuleState move2stop = new SwerveModuleState(0, 45);
+        SwerveModuleState move2stop = new SwerveModuleState(0, 315);
         timer = 0;
         resetRuntime();
         while (timer < 0.5) {
@@ -158,11 +158,11 @@ public class AutoBackRight extends LinearOpMode {
             br.setDesiredState(move3align);
             timer = getRuntime();
         }
-        SwerveModuleState move3L = new SwerveModuleState(-0.8, 0);
-        SwerveModuleState move3R = new SwerveModuleState(0.8, 0);
+        SwerveModuleState move3L = new SwerveModuleState(0.8, 0);
+        SwerveModuleState move3R = new SwerveModuleState(-0.8, 0);
         timer = 0;
         resetRuntime();
-        while (timer < 1.4) {
+        while (timer < 0.5) {
             fl.setDesiredState(move3L);
             fr.setDesiredState(move3R);
             bl.setDesiredState(move3L);

@@ -7,9 +7,9 @@ import org.firstinspires.ftc.teamcode.swerve.SwerveDrive;
 import org.firstinspires.ftc.teamcode.swerve.SwerveModule;
 import org.firstinspires.ftc.teamcode.swerve.SwerveModuleState;
 
-@Autonomous(name="autoPostLeft", group="Linear OpMode")
+@Autonomous(name="autoPostRight", group="Linear OpMode")
 
-public class autoPostLeft extends LinearOpMode {
+public class autoPostRight extends LinearOpMode {
     private final Robot Robot = new Robot();
     double timer;
 
@@ -35,7 +35,7 @@ public class autoPostLeft extends LinearOpMode {
         Robot.shooter.setPower(0);
         Robot.intake.setPower(0);
 
-        SwerveModuleState move0align = new SwerveModuleState(0, 135);
+        SwerveModuleState move0align = new SwerveModuleState(0, 215);
         timer = 0;
         resetRuntime();
         while (timer < 2) {
@@ -45,7 +45,7 @@ public class autoPostLeft extends LinearOpMode {
             br.setDesiredState(move0align);
             timer = getRuntime();
         }
-        SwerveModuleState move0 = new SwerveModuleState(0.8, 135);
+        SwerveModuleState move0 = new SwerveModuleState(0.8, 215);
         timer = 0;
         resetRuntime();
         while (timer < 0.7) {
@@ -55,7 +55,7 @@ public class autoPostLeft extends LinearOpMode {
             br.setDesiredState(move0);
             timer = getRuntime();
         }
-        SwerveModuleState move0stop = new SwerveModuleState(0, 135);
+        SwerveModuleState move0stop = new SwerveModuleState(0, 215);
         timer = 0;
         resetRuntime();
         while (timer < 0.5) {
